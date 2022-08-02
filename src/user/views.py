@@ -70,20 +70,22 @@ def login():
         user_by_email = User.get_by_email(email)
 
         if user_by_email and user_by_email.check_password(form.password.data):
-
+            print(user_by_email.first_name)
             try:
                 login_user(user_by_email)
+                print(user_by_email.first_name)
             except:
                 flash('login failed', 'danger')
                 return render_template("login.html", form=form)
             else:
                 flash('login successful', "success")
-            next = request.args.get("next")
 
-            if next is None:
-                next = url_for('user.profile')
+            # next = request.args.get("next")
+            #
+            # if next is None:
+            #     next = url_for('user.profile')
 
-            return redirect(url_for("user.profile"))
+            return redirect(url_for("main.main"))
 
         else:
             flash("such email doesn't exists", 'danger')
